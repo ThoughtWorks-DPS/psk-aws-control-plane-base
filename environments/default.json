@@ -1,0 +1,16 @@
+{
+    "aws_assume_role": "PSKRoles/PSKPlatformEKSBaseRole",
+    "subnet_identifier": "node",
+    "eks_version": "1.27",
+
+    "management_node_group_name": "management-x86-al2-mng",
+    "management_node_group_role": "management",
+    "management_node_group_ami_type": "AL2_x86_64",
+    "management_node_group_platform": "linux",
+    "management_node_group_disk_size": "50",
+    "management_node_group_capacity_type": "SPOT",
+    "management_node_group_desired_size": "3",
+    "management_node_group_max_size": "5",
+    "management_node_group_min_size": "3",
+    "management_node_group_instance_types": ["t2.2xlarge","t3.2xlarge","t3a.2xlarge","m5n.2xlarge","m5.2xlarge","m4.2xlarge"]
+}

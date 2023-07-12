@@ -1,0 +1,26 @@
+directory:
+  - .
+branch: main
+download-external-modules: true
+evaluate-variables: true
+external-modules-download-path: .external_modules
+framework:
+- all
+mask: []
+secrets-scan-file-type: []
+summary-position: top
+skip-check:
+  - CKV_TF_1        # all modules are pinned to module version, unknown error logic
+  - CKV_CIRCLECIPIPELINES_2
+  - CKV_AWS_356     # policy statements can get veyr long an exceed the character limit, * help shorten
+  - CKV_AWS_109     # eks-base is the originating creator of this infrastructure and needs the defined constraints
+  - CKV_AWS_111     # "
+  - CKV_AWS_79      # disable IMDSv1
+  - CKV_AWS_341     # "
+  - CKV_AWS_338     # do not need long-term retenion of logs in psk labs
+  - CKV_AWS_339     # running on current, unknown error logic
+  - CKV_AWS_58      # secrets encryption is turned on, unknown error logic
+  - CKV_AWS_39      # public endpoint is a requirement, is appropriately secured
+  - CKV_AWS_38      # "
+  - CKV_AWS_37      # all log types are enabled, unknown error logic
+  - CKV2_AWS_5      # module managed security group, attaches to EKS resources
