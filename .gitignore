@@ -5,4 +5,4 @@ source.env
 generated_config.yml
 *.tfvars.json
 .venv
-.external_modules
+.external*
