@@ -18,4 +18,4 @@ jobs:
 
   static-code-analysis:
     name: static code analysis
-    uses: ThoughtWorks-DPS/terraform-action/.github/workflows/static-code-analysis.yaml@main
+    uses: ThoughtWorks-DPS/terraform-action/.github/workflows/bob.yaml@main
