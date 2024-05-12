@@ -1,13 +1,13 @@
 terraform {
-  required_version = "~> 1.5"
+  required_version = "~> 1.8"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.7"
+      version = "~> 5.48"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.21"
+      version = "~> 2.30"
     }
   }
 
@@ -31,7 +31,7 @@ provider "aws" {
   default_tags {
     tags = {
       pipeline                                     = "psk-aws-platform-eks-base"
-      "kubernetes.io/cluster/${var.instance_name}" = "shared"
+      "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     }
   }
 }
@@ -43,6 +43,6 @@ provider "kubernetes" {
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
     command     = "aws"
-    args        = ["eks", "get-token", "--cluster-name", var.instance_name, "--region", var.aws_region, "--role-arn", "arn:aws:iam::${var.aws_account_id}:role/${var.aws_assume_role}"]
+    args        = ["eks", "get-token", "--cluster-name", var.cluster_name, "--region", var.aws_region, "--role-arn", "arn:aws:iam::${var.aws_account_id}:role/${var.aws_assume_role}"]
   }
 }

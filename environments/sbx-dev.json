@@ -1,4 +1,0 @@
-{
-    "aws_account_id": "{{ op://empc-lab/aws-dps-2/aws-account-id }}",
-    "env_credentials": "nonprod"
-}

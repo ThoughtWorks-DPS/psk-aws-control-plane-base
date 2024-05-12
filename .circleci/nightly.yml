@@ -1,5 +1,0 @@
-      - integration-tests:
-          name: {{instance_name}} integration test
-          context: *context
-          instance_name: {{instance_name}}
-          env_credentials: {{env_credentials}}

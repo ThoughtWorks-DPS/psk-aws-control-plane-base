@@ -6,3 +6,6 @@ generated_config.yml
 *.tfvars.json
 .venv
 .external*
+kubeconfig
+bash-functions.sh
+credentials

@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       - id: check-executables-have-shebangs
       - id: check-symlinks
@@ -9,9 +9,7 @@ repos:
       - id: check-json
       - id: check-yaml
         args: [--allow-multiple-documents]
-        exclude: ^.circleci/(pre-approve|post-approve|nightly).yml
       - id: forbid-new-submodules
-      - id: detect-private-key
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
   - repo: local
@@ -22,10 +20,10 @@ repos:
         language: system
         args: ["--scan"]
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.77.1
+    rev: v1.88.2
     hooks:
       - id: terraform_fmt
       - id: terraform_validate
       - id: terraform_tflint
+      - id: terraform_trivy
       - id: terraform_checkov
-      - id: terraform_tfsec

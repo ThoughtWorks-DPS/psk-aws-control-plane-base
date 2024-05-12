@@ -16,9 +16,14 @@ variable "aws_account_id" {
 
 variable "aws_assume_role" { type = string }
 
-variable "instance_name" {
+variable "cluster_name" {
   description = "cluster instance name"
   type        = string
+}
+
+variable "enable_log_types" {
+  description = "list of control plane log types to be generated"
+  type        = list(string)
 }
 
 variable "eks_version" {
@@ -31,11 +36,15 @@ variable "eks_version" {
   }
 }
 
-variable "subnet_identifier" {
+variable "node_subnet_identifier" {
   description = "search string to identity node pool subnets"
   type        = string
 }
-#variable "additional_aws_auth_users" {}
+
+variable "intra_subnet_identifier" {
+  description = "search string to identity intra pool subnets"
+  type        = string
+}
 
 variable "management_node_group_name" {
   type = string
@@ -56,23 +65,15 @@ variable "management_node_group_role" {
 variable "management_node_group_ami_type" {
   type = string
   validation {
-    condition     = contains(["AL2_x86_64", "BOTTLEROCKET_x86_64", "AL2_ARM_64", "BOTTLEROCKET_x86_64"], var.management_node_group_ami_type)
-    error_message = "Invalid AMI Type. Use AL2_x86_64 | BOTTLEROCKET_x86_64 | AL2_ARM_64 | BOTTLEROCKET_x86_64"
-  }
-}
-
-variable "management_node_group_platform" {
-  type = string
-  validation {
-    condition     = contains(["linux", "bottlerocket"], var.management_node_group_platform)
-    error_message = "Invalid platform Type. Use linux | bottlerocket"
+    condition     = contains(["AL2_x86_64", "BOTTLEROCKET_x86_64", "AL2_ARM_64", "BOTTLEROCKET_ARM_64"], var.management_node_group_ami_type)
+    error_message = "Invalid AMI Type. Use AL2_x86_64 | BOTTLEROCKET_x86_64 | AL2_ARM_64 | BOTTLEROCKET_ARM_64"
   }
 }
 
 variable "management_node_group_disk_size" {
   type = string
   validation {
-    condition     = can(regex("^[1-9][1-9]$", var.management_node_group_disk_size))
+    condition     = can(regex("^[1-9][0-9]$", var.management_node_group_disk_size))
     error_message = "Invalid node disk size. Use value between 10 to 99gb."
   }
 }
