@@ -22,3 +22,8 @@ jobs:
     with:
       cosign-version: 2.2.4
       terraform-version: 1.8.2
+      tflint-version: 0.51.0
+      checkov-version: 3.2.71
+      snyk-version: 1.1291.0
+      terrascan-version: 1.19.1
+      trivy-version: 0.51.1
