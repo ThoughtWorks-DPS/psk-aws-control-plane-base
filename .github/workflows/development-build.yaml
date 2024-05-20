@@ -24,6 +24,11 @@ jobs:
       tflint-provider: aws
       tflint-provider-version: 0.31.0
       trivy-scan: true
-      terrascan-scan: true
-      terrascan-iac-type: terraform
-      terrascan-policy-type: aws
+
+  plan:
+    name: terraform plan
+    uses: ThoughtWorks-DPS/terraform-action/.github/workflows/plan.yaml@main
+    with:
+      tfc-workspace: "psk-aws-platform-eks-base-sandbox-i01-aws-us-east-1"
+      tfc-organization: twdps
+      checkov-scan: true
