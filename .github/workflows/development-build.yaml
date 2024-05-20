@@ -21,5 +21,6 @@ jobs:
     uses: ThoughtWorks-DPS/terraform-action/.github/workflows/new.yaml@main
     with:
       tflint-scan: true
+      tflint-provider: aws
       trivy-scan: true
       checkov-scan: true
