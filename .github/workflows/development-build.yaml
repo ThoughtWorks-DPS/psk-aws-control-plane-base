@@ -24,4 +24,6 @@ jobs:
       tflint-provider: aws
       tflint-provider-version: 0.31.0
       trivy-scan: true
-      checkov-scan: true
+      terrascan-scan: true
+      terrascan-iac-type: terraform
+      terrascan-policy-type: aws
