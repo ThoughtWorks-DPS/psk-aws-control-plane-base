@@ -5,7 +5,7 @@
   "aws_region": "us-east-1",
 
   "eks_version": "1.29",
-  "enable_log_types": ["api", "audit", "authenticator", "controllerManager", "scheduler"],
+  "enable_log_types": ["api","audit","authenticator","controllerManager","scheduler"],
   "node_subnet_identifier": "node",
   "intra_subnet_identifier": "intra",
 
