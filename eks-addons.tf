@@ -1,6 +1,6 @@
 module "eks_addons" {
   source     = "aws-ia/eks-blueprints-addons/aws"
-  version    = "1.16.2"
+  version    = "1.16.3"
   depends_on = [module.eks]
 
   cluster_name      = module.eks.cluster_name
@@ -63,7 +63,7 @@ module "eks_addons" {
 
 module "vpc_cni_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "~> 5.39.0"
+  version = "~> 5.39.1"
 
   role_name             = "${var.cluster_name}-vpc-cni"
   attach_vpc_cni_policy = true
@@ -79,7 +79,7 @@ module "vpc_cni_irsa_role" {
 
 module "ebs_csi_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "~> 5.39.0"
+  version = "~> 5.39.1"
 
   role_name             = "${var.cluster_name}-ebs-csi-controller-sa"
   attach_ebs_csi_policy = true
