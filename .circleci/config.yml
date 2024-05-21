@@ -120,6 +120,8 @@ workflows:
           before-apply:
             - set-environment:
                 cluster: sbx-i01-aws-us-east-1
+          requires:
+            - approve sbx-i01-aws-us-east-1 changes
           filters: *on-push-main
 
       # ====================================================== tear down 
