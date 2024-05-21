@@ -27,3 +27,6 @@ runs:
         SLACK_BOT_TOKEN: op://empc-lab/svc-slack/post-bot-token
         AWS_ACCESS_KEY_ID: op://empc-lab/aws-dps-2/PSKProdServiceAccount-aws-access-key-id
         AWS_SECRET_ACCESS_KEY: op://empc-lab/aws-dps-2/PSKProdServiceAccount-aws-secret-access-key
+
+    - name: set ./.terraformrc
+      uses: ThoughtWorks-DPS/terraform-action/terraformrc@main
