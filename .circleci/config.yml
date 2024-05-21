@@ -136,6 +136,8 @@ workflows:
           before-destroy:
             - set-environment:
                 cluster: sbx-i01-aws-us-east-1
+          requires:
+            - approve tear down
           filters: *on-push-main
 
   #     - do/schedule-pipeline:
