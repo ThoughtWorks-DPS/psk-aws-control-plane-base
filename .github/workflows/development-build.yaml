@@ -30,3 +30,4 @@ jobs:
     uses: ThoughtWorks-DPS/terraform-action/.github/workflows/plan.yaml@main
     with:
       checkov-scan: true
+      before-init: nonprod
