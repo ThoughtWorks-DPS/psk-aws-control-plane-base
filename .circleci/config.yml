@@ -99,6 +99,7 @@ workflows:
           name: plan sbx-i01-aws-us-east-1 changes
           context: *context
           executor-image: *executor-image
+          workspace: sbx-i01-aws-us-east-1
           before-plan:
             - set-environment:
                 cluster: sbx-i01-aws-us-east-1
