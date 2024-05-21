@@ -133,7 +133,7 @@ workflows:
           context: *context
           executor-image: *executor-image
           workspace: sbx-i01-aws-us-east-1
-          before-plan:
+          before-destroy:
             - set-environment:
                 cluster: sbx-i01-aws-us-east-1
           filters: *on-push-main
