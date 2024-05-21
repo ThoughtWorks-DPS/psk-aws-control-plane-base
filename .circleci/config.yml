@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   terraform: twdps/terraform@3.0.0
   op: twdps/onepassword@3.0.0
-  do: twdps/pipeline-events@4.0.0
+  do: twdps/pipeline-events@4.1.0
 
 globals:
   - &context empc-lab
@@ -53,6 +53,18 @@ commands:
   #         environment:
   #           WORKSPACE: <<parameters.cluster-name>>
   #         command: bash scripts/run_inspec_integration_tests.sh << parameters.cluster-name >>
+
+  write-cluster-identifiers:
+    description: write kubeconfig, cluster-url, and base64-certificate-authority-data to vault
+    parameters:
+      cluster:
+        description: cluster role cluster and tf workspace name
+        type: string
+        default: ""
+    steps:
+      - run:
+          name: run write_cluster_identifiers script
+          command: bash scripts/write_cluster_identifiers.sh << parameters.cluster >>
 
 # jobs:
 
@@ -119,6 +131,9 @@ workflows:
           workspace: sbx-i01-aws-us-east-1
           before-apply:
             - set-environment:
+                cluster: sbx-i01-aws-us-east-1
+          after-apply:
+            - write-cluster-identifiers:
                 cluster: sbx-i01-aws-us-east-1
           requires:
             - approve sbx-i01-aws-us-east-1 changes
