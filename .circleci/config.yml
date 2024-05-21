@@ -112,6 +112,31 @@ workflows:
             - plan sbx-i01-aws-us-east-1 changes
           filters: *on-push-main
 
+      - terraform/apply:
+          name: apply sbx-i01-aws-us-east-1 changes
+          context: *context
+          executor-image: *executor-image
+          workspace: sbx-i01-aws-us-east-1
+          before-plan:
+            - set-environment:
+                cluster: sbx-i01-aws-us-east-1
+          filters: *on-push-main
+
+      # ====================================================== tear down 
+      
+      - approve tear down:
+          type: approval
+          filters: *on-push-main
+
+      - terraform/destroy:
+          name: destroy sbx-i01-aws-us-east-1
+          context: *context
+          executor-image: *executor-image
+          workspace: sbx-i01-aws-us-east-1
+          before-plan:
+            - set-environment:
+                cluster: sbx-i01-aws-us-east-1
+          filters: *on-push-main
 
   #     - do/schedule-pipeline:
   #         name: Deploy sandbox nightly schedule
