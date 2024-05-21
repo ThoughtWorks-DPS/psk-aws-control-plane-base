@@ -28,6 +28,8 @@ jobs:
   plan:
     name: terraform plan
     uses: ThoughtWorks-DPS/terraform-action/.github/workflows/plan.yaml@main
+    secrets:
+      OP_SERVICE_ACCOUNT_TOKEN: ${{ inputs.OP_SERVICE_ACCOUNT_TOKEN }}
     with:
       checkov-scan: true
       before-init: nonprod
