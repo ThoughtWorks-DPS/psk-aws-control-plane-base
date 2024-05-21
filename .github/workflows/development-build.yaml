@@ -31,5 +31,6 @@ jobs:
     secrets:
       OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
     with:
+      workspace: sbx-i01-aws-us-east-1
       checkov-scan: true
       before-init: nonprod
