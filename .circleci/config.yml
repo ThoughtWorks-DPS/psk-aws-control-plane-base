@@ -95,16 +95,23 @@ workflows:
                 cluster: sbx-i01-aws-us-east-1
           filters: *on-push-main
 
-      # - terraform/plan:
-      #     name: plan sbx-i01-aws-us-east-1 changes
-      #     context: *context
-      #     executor-image: *executor-image
-      #     before-static-analysis:
-      #       - op/env:
-      #           env-file: op.sbx-i01-aws-us-east-1.env
-      #     filters: *on-push-main
+      - terraform/plan:
+          name: plan sbx-i01-aws-us-east-1 changes
+          context: *context
+          executor-image: *executor-image
+          before-plan:
+            - op/env:
+                env-file: op.sbx-i01-aws-us-east-1.env
+          filters: *on-push-main
           
+      - approve sbx-i01-aws-us-east-1 changes:
+          type: approval
+          requires:
+            - static code analysis
+            - plan sbx-i01-aws-us-east-1 changes
+          filters: *on-push-main
 
+          
   #     - do/schedule-pipeline:
   #         name: Deploy sandbox nightly schedule
   #         context: *context
