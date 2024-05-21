@@ -7,7 +7,7 @@ orbs:
 
 globals:
   - &context empc-lab
-  - &executor-image twdps/circleci-infra-aws:alpine-7.0.0
+  - &executor-image twdps/circleci-infra-aws:alpine-7.1.0
 
 on-push-main: &on-push-main
   branches:
@@ -95,14 +95,14 @@ workflows:
                 cluster: sbx-i01-aws-us-east-1
           filters: *on-push-main
 
-      - terraform/plan:
-          name: plan sbx-i01-aws-us-east-1 changes
-          context: *context
-          executor-image: *executor-image
-          before-static-analysis:
-            - op/env:
-                env-file: op.sbx-i01-aws-us-east-1.env
-          filters: *on-push-main
+      # - terraform/plan:
+      #     name: plan sbx-i01-aws-us-east-1 changes
+      #     context: *context
+      #     executor-image: *executor-image
+      #     before-static-analysis:
+      #       - op/env:
+      #           env-file: op.sbx-i01-aws-us-east-1.env
+      #     filters: *on-push-main
           
 
   #     - do/schedule-pipeline:
