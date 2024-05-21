@@ -68,7 +68,6 @@ commands:
 
 # jobs:
 
-
 #   integration-tests:
 #     description: Recurring job to run pipeline integration tests and detect aws configuration drift
 #     docker:

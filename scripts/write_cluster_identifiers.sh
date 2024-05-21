@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source bash_functions.sh
+source bash-functions.sh
 set -eo pipefail
 
 cluster_name=$1
