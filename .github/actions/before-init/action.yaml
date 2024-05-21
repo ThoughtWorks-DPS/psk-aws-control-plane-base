@@ -17,7 +17,7 @@ runs:
   steps:
 
     - name: run step if instance matches
-      if: ${{ inputs.instance != 'prod' }}
+      if: ${{ inputs.instance != 'prod-i01-aws-us-east-2' }}
       uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0    # v2.0.0
       with:
         export-env: true
@@ -30,3 +30,9 @@ runs:
 
     - name: set ./.terraformrc
       uses: ThoughtWorks-DPS/terraform-action/terraformrc@main
+
+    - name: populate ${{ inputs.instance }} tfvar template
+      uses: ThoughtWorks-DPS/1password-action/tpl@2f0a75fadf187f444c855270f8ae09a5c95747d0     # v0.2.3
+      with:
+        tpl-path: environments
+        tpl-file: sbx-i01-aws-us-east-1.auto.tfvars.json
