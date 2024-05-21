@@ -89,19 +89,21 @@ workflows:
           name: static code analysis
           context: *context
           executor-image: *executor-image
-          # checkov-additional-args: --skip-check CKV_CIRCLECIPIPELINES_2
+          trivy-scan: true
+          before-static-analysis:
+            - set-environment:
+                cluster: sbx-i01-aws-us-east-1
+          filters: *on-push-main
+
+      - terraform/plan:
+          name: plan sbx-i01-aws-us-east-1 changes
+          context: *context
+          executor-image: *executor-image
           before-static-analysis:
             - op/env:
                 env-file: op.sbx-i01-aws-us-east-1.env
           filters: *on-push-main
-
-  #     - launch-dynamic-pipeline:
-  #         name: generate sandbox pipeline
-  #         context: *context
-  #         release-pipeline-name: sandbox
-  #         requires:
-  #           - static analysis of psk-aws-platform-vpc terraform
-  #         filters: *on-push-main
+          
 
   #     - do/schedule-pipeline:
   #         name: Deploy sandbox nightly schedule
