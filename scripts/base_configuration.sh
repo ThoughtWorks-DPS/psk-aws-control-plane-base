@@ -9,6 +9,7 @@ export AWS_ASSUME_ROLE=$(jq -er .aws_assume_role "$cluster_name".auto.tfvars.jso
 export AWS_REGION=$(jq -er .aws_region "$cluster_name".auto.tfvars.json)
 
 awsAssumeRole "$AWS_ACCOUNT_ID" "$AWS_ASSUME_ROLE"
+echo "arn:aws:iam::$AWS_ACCOUNT_ID:role/$AWS_ASSUME_ROLE --alias $cluster_name"
 
 # generate kubeconfig based on PSK service account role
 aws eks update-kubeconfig --name "$cluster_name" \
