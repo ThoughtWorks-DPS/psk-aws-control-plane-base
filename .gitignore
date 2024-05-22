@@ -1,8 +1,8 @@
 source.env
 .terraform*
 .python-version
+.ruby-version
 *.auto.tfvars.json
-generated_config.yml
 *.tfvars.json
 .venv
 .external*

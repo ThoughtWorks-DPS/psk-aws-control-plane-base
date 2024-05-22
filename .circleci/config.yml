@@ -29,9 +29,8 @@ commands:
     description: generate environment credentials and configuration from templates
     parameters:
       cluster:
-        description: cluster role cluster and tf workspace name
+        description: cluster and tf workspace name
         type: string
-        default: ""
     steps:
       - op/env:
           env-file: op.<< parameters.cluster >>.env
@@ -41,30 +40,32 @@ commands:
       - terraform/terraformrc
       - do/bash-functions
 
-  # run-inspec-tests:
-  #   description: run inspec aws configuration tests
-  #   parameters:
-  #     cluster-name:
-  #       description: tf workspace name
-  #       type: string
-  #   steps:
-  #     - run:
-  #         name: run inspec tests
-  #         environment:
-  #           WORKSPACE: <<parameters.cluster-name>>
-  #         command: bash scripts/run_inspec_integration_tests.sh << parameters.cluster-name >>
+  run-integration-tests:
+    description: run cluster configuration tests
+    parameters:
+      cluster:
+        description: cluster and tf workspace name
+        type: string
+    steps:
+      - run:
+          name: run cluster configuration tests
+          environment:
+            CLUSTER: <<parameters.cluster-name>>
+          command: bash scripts/integration_tests.sh << parameters.cluster >>
 
-  write-cluster-identifiers:
+  base-configuration-validation:
     description: write kubeconfig, cluster-url, and base64-certificate-authority-data to vault
     parameters:
       cluster:
-        description: cluster role cluster and tf workspace name
+        description: cluster and tf workspace name
         type: string
         default: ""
     steps:
       - run:
-          name: run write_cluster_identifiers script
-          command: bash scripts/write_cluster_identifiers.sh << parameters.cluster >>
+          name: store cluster identifiers and apply baseline configuration
+          command: bash scripts/base_configuration.sh << parameters.cluster >>
+      - run-integration-tests:
+          cluster: << parameters.cluster >>
 
 # jobs:
 
@@ -132,7 +133,7 @@ workflows:
             - set-environment:
                 cluster: sbx-i01-aws-us-east-1
           after-apply:
-            - write-cluster-identifiers:
+            - base-configuration-validation:
                 cluster: sbx-i01-aws-us-east-1
           requires:
             - approve sbx-i01-aws-us-east-1 changes
