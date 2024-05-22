@@ -54,7 +54,26 @@ module "eks_addons" {
       })
     }
 
-  # aws-efs-csi-driver
+    aws-efs-csi-driver = {
+      amost_recent             = true
+      service_account_role_arn = module.efs_csi_irsa_role.iam_role_arn
+      configuration_values     = jsonencode({
+        controller = {
+          nodeSelector = {
+            "node.kubernetes.io/role" = "management"
+          }
+          tolerations = [
+            {
+              key      = "dedicated"
+              operator = "Equal"
+              value    = "management"
+              effect   = "NoSchedule"
+            }
+          ]
+        }
+      })
+    }
+
   # aws-mountpoint-s3-csi-driver
   # aws-guardduty-agent
   # eks-pod-identity-agent = { most_recent = true }
@@ -88,6 +107,21 @@ module "ebs_csi_irsa_role" {
     main = {
       provider_arn               = module.eks.oidc_provider_arn
       namespace_service_accounts = ["kube-system:ebs-csi-controller-sa"]
+    }
+  }
+}
+
+module "efs_csi_irsa_role" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  version = "~> 5.39.1"
+
+  role_name             = "${var.cluster_name}-efs-csi-controller-sa"
+  attach_efs_csi_policy = true
+
+  oidc_providers = {
+    main = {
+      provider_arn               = module.eks.oidc_provider_arn
+      namespace_service_accounts = ["kube-system:efs-csi-controller-sa"]
     }
   }
 }

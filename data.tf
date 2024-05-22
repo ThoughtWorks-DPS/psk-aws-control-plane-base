@@ -16,6 +16,11 @@ data "aws_subnets" "cluster_private_subnets" {
   }
 }
 
+data "aws_subnet" "cluster_private_subnets" {
+  for_each = toset(data.aws_subnets.cluster_private_subnets.ids)
+  id       = each.value
+}
+
 data "aws_subnets" "cluster_intra_subnets" {
   filter {
     name   = "vpc-id"
