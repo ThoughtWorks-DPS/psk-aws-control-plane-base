@@ -13,13 +13,13 @@ awsAssumeRole "$AWS_ACCOUNT_ID" "$AWS_ASSUME_ROLE"
 # generate kubeconfig based on PSK service account role
 aws eks update-kubeconfig --name "$cluster_name" \
 --region "$AWS_REGION" \
---role-arn arn:aws:iam::"$AWS_ACCOUNT_ID":role/"$AWS_ASSUME_ROLE" --alias "$cluster_name" \
+--role-arn "arn:aws:iam::$AWS_ACCOUNT_ID:role/$AWS_ASSUME_ROLE --alias $cluster_name" \
 --kubeconfig "~/.kube/config"
 
 # store cluster identifiers in 1password vault
-write1passwordField empc-lab $cluster_name kubeconfig-base64 $(cat ~/.kube/config | base64)
-write1passwordField empc-lab $cluster_name cluster-url $(terraform output -raw cluster_url)
-write1passwordField empc-lab $cluster_name base64-certificate-authority-data $(terraform output -raw cluster_public_certificate_authority_data)
+write1passwordField empc-lab "psk-aws-${cluster_name}" kubeconfig-base64 $(cat ~/.kube/config | base64)
+write1passwordField empc-lab "psk-aws-${cluster_name}" cluster-url $(terraform output -raw cluster_url)
+write1passwordField empc-lab "psk-aws-${cluster_name}" base64-certificate-authority-data $(terraform output -raw cluster_public_certificate_authority_data)
 
 # apply baseline cluster resources
 # psk-system namespace
