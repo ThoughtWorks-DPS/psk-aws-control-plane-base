@@ -15,7 +15,7 @@ terraform {
     hostname     = "app.terraform.io"
     organization = "twdps"
     workspaces {
-      prefix = "psk-aws-platform-eks-base-"
+      prefix = "psk-aws-control-plane-base-"
     }
   }
 }
@@ -25,12 +25,12 @@ provider "aws" {
 
   assume_role {
     role_arn     = "arn:aws:iam::${var.aws_account_id}:role/${var.aws_assume_role}"
-    session_name = "di-global-platform-eks-base"
+    session_name = "psk-aws-control-plane-base"
   }
 
   default_tags {
     tags = {
-      pipeline                                    = "psk-aws-platform-eks-base"
+      pipeline                                    = "psk-aws-control-plane-base"
       "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     }
   }

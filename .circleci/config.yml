@@ -112,6 +112,8 @@ workflows:
           context: *context
           executor-image: *executor-image
           workspace: sbx-i01-aws-us-east-1
+          tfc-workspace: psk-aws-control-plane-base-sbx-i01-aws-us-east-1
+          tfc-organization: twdps
           before-plan:
             - set-environment:
                 cluster: sbx-i01-aws-us-east-1
