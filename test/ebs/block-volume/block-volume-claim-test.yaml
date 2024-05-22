@@ -20,18 +20,6 @@ metadata:
   name: block-test-pod
   namespace: psk-system
 spec:
-  securityContext:
-    allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
-    runAsNonRoot: true
-    runAsUser: 10001
-    runAsGroup: 10001
-    seccompProfile:
-      type: RuntimeDefault
-    capabilities:
-      drop:
-        - ALL
-      add: ["CAP_NET_BIND_SERVICE"]
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -48,19 +36,26 @@ spec:
       effect: "NoSchedule"
   containers:
   - name: block-test-pod
-    image: busybox
+    image: busybox:1.36
     command: ["/bin/sh", "-c"]
     args: ["tail -f /dev/null"]
     volumeDevices:
     - name: data
       devicePath: /dev/xvda
-  resources:
-    requests:
-      cpu: 10m
-      memory: 50Mi
-    limits:
-      cpu: 100m
-      memory: 200Mi
+    resources:
+      requests:
+        cpu: 10m
+        memory: 50Mi
+      limits:
+        cpu: 100m
+        memory: 200Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+          - ALL
   volumes:
   - name: data
     persistentVolumeClaim:

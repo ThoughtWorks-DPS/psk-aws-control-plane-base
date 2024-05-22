@@ -92,7 +92,7 @@ commands:
 
 workflows:
 
-  deploy sbx-i01-aws-us-east-1 eks base:
+  deploy sbx-i01-aws-us-east-1 control plane base:
     when:
       not:
         equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
@@ -116,7 +116,7 @@ workflows:
             - set-environment:
                 cluster: sbx-i01-aws-us-east-1
           filters: *on-push-main
-          
+
       - approve sbx-i01-aws-us-east-1 changes:
           type: approval
           requires:
@@ -139,7 +139,7 @@ workflows:
             - approve sbx-i01-aws-us-east-1 changes
           filters: *on-push-main
 
-      # ====================================================== tear down 
+      # ====================================================== tear down
 
       - approve tear down:
           type: approval
