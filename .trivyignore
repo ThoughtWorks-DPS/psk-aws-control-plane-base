@@ -8,3 +8,5 @@ AVD-AWS-0041
 AVD-AWS-0104
 # eks base role intentionally using wildcard in permission definition
 AVD-AWS-0057
+# intentional admin role
+AVD-KSV-0111
