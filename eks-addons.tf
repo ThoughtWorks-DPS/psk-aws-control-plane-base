@@ -13,12 +13,12 @@ module "eks_addons" {
     kube-proxy = { most_recent = true }
 
     vpc-cni = {
-      most_recent                 = true
-      service_account_role_arn    = module.vpc_cni_irsa_role.iam_role_arn
+      most_recent              = true
+      service_account_role_arn = module.vpc_cni_irsa_role.iam_role_arn
     }
 
     coredns = {
-      most_recent          = true
+      most_recent = true
       configuration_values = jsonencode({
         nodeSelector = {
           "node.kubernetes.io/role" = "management"
@@ -37,7 +37,7 @@ module "eks_addons" {
     aws-ebs-csi-driver = {
       amost_recent             = true
       service_account_role_arn = module.ebs_csi_irsa_role.iam_role_arn
-      configuration_values     = jsonencode({
+      configuration_values = jsonencode({
         controller = {
           nodeSelector = {
             "node.kubernetes.io/role" = "management"
@@ -57,7 +57,7 @@ module "eks_addons" {
     aws-efs-csi-driver = {
       amost_recent             = true
       service_account_role_arn = module.efs_csi_irsa_role.iam_role_arn
-      configuration_values     = jsonencode({
+      configuration_values = jsonencode({
         controller = {
           nodeSelector = {
             "node.kubernetes.io/role" = "management"
@@ -74,9 +74,9 @@ module "eks_addons" {
       })
     }
 
-  # aws-mountpoint-s3-csi-driver
-  # aws-guardduty-agent
-  # eks-pod-identity-agent = { most_recent = true }
+    # aws-mountpoint-s3-csi-driver
+    # aws-guardduty-agent
+    # eks-pod-identity-agent = { most_recent = true }
   }
 }
 

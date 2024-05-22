@@ -30,7 +30,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      pipeline                                     = "psk-aws-platform-eks-base"
+      pipeline                                    = "psk-aws-platform-eks-base"
       "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     }
   }
