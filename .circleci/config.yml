@@ -50,7 +50,7 @@ commands:
       - run:
           name: run cluster configuration tests
           environment:
-            CLUSTER: <<parameters.cluster-name>>
+            CLUSTER: << parameters.cluster >>
           command: bash scripts/integration_tests.sh << parameters.cluster >>
 
   base-configuration-validation:
