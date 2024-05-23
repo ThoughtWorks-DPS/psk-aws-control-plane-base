@@ -14,3 +14,12 @@ aws eks update-kubeconfig --name "$cluster_name" \
 --region "$AWS_REGION" \
 --role-arn "arn:aws:iam::$AWS_ACCOUNT_ID:role/$AWS_ASSUME_ROLE" \
 --kubeconfig ~/.kube/config
+
+cat ~/.kube/config
+
+aws eks update-kubeconfig --name "$cluster_name" \
+--region "$AWS_REGION" \
+--role-arn "arn:aws:iam::$AWS_ACCOUNT_ID:role/$AWS_ASSUME_ROLE" \
+--kubeconfig kubetest
+
+cat kubetest
