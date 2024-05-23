@@ -11,7 +11,7 @@ export AWS_REGION=$(jq -er .aws_region "$cluster_name".auto.tfvars.json)
 # awsAssumeRole "$AWS_ACCOUNT_ID" "$AWS_ASSUME_ROLE"
 
 # cluster addons smoke test
-bats test/*.bats
+bats test/baseline/*.bats
 
 # test ebs storage class ============================================
 # create test storage class
