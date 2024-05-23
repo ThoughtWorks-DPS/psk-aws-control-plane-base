@@ -54,7 +54,10 @@ commands:
           command: bash scripts/aws_integration_tests.sh << parameters.cluster >>
       - run:
           name: run cluster integration tests
-          command: bash scripts/k8s_integration_tests.sh << parameters.cluster >>
+          command: bash scripts/eks_addons_tests.sh << parameters.cluster >>
+      - run:
+          name: run ebs storage class tests
+          command: bash scripts/ebs_storage_class_tests.sh << parameters.cluster >>
 
   base-configuration-validation:
     description: write kubeconfig, cluster-url, and base64-certificate-authority-data to vault

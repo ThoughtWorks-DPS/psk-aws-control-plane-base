@@ -3,18 +3,9 @@ source bash-functions.sh  # from orb-pipeline-events/bash-functions
 set -eo pipefail
 
 cluster_name=$1
-
-# export AWS_ACCOUNT_ID=$(jq -er .aws_account_id "$cluster_name".auto.tfvars.json)
-# export AWS_ASSUME_ROLE=$(jq -er .aws_assume_role "$cluster_name".auto.tfvars.json)
 export AWS_REGION=$(jq -er .aws_region "$cluster_name".auto.tfvars.json)
 
-# awsAssumeRole "$AWS_ACCOUNT_ID" "$AWS_ASSUME_ROLE"
-
-# cluster addons smoke test
-bats test/baseline/*.bats
-
-# test ebs storage class ============================================
-# create test storage class
+# create test ebs storage class
 kubectl apply -f test/ebs/test-ebs-storage-class.yaml
 
 # test creation ebs-csi dynamic volume
@@ -33,7 +24,7 @@ kubectl delete -f test/ebs/dynamic-volume/expand-volume-claim.yaml
 
 # test create ebs-csi block volume
 kubectl apply -f test/ebs/block-volume/block-volume-claim-test.yaml
-sleep 5
+sleep 15
 bats test/ebs/block-volume/block-volume-claim-test.bats
 
 kubectl delete -f test/ebs/block-volume/block-volume-claim-test.yaml
