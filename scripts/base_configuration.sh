@@ -8,6 +8,8 @@ export AWS_ACCOUNT_ID=$(jq -er .aws_account_id "$cluster_name".auto.tfvars.json)
 export AWS_ASSUME_ROLE=$(jq -er .aws_assume_role "$cluster_name".auto.tfvars.json)
 export AWS_REGION=$(jq -er .aws_region "$cluster_name".auto.tfvars.json)
 
+kubeconfig=$(cat ~/.kube/config | base64)
+
 # store cluster identifiers in 1password vault
 write1passwordField empc-lab "psk-aws-${cluster_name}" kubeconfig-base64 "$kubeconfig"
 write1passwordField empc-lab "psk-aws-${cluster_name}" cluster-url $(terraform output -raw cluster_url)
