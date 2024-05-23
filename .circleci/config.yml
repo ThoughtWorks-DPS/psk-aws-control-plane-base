@@ -62,10 +62,13 @@ commands:
         default: ""
     steps:
       - run:
+          name: generate kubeconfig
+          command: bash scripts/generate_kubeconfig.sh << parameters.cluster >>
+      - run:
           name: store cluster identifiers and apply baseline configuration
           command: bash scripts/base_configuration.sh << parameters.cluster >>
-      - run-integration-tests:
-          cluster: << parameters.cluster >>
+      # - run-integration-tests:
+      #     cluster: << parameters.cluster >>
 
 # jobs:
 

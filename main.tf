@@ -5,9 +5,23 @@ module "eks" {
   cluster_name    = var.cluster_name
   cluster_version = var.eks_version
 
-  cluster_endpoint_public_access           = true
-  authentication_mode                      = "API_AND_CONFIG_MAP"
-  enable_cluster_creator_admin_permissions = true
+  cluster_endpoint_public_access = true
+  authentication_mode            = "API"
+  #enable_cluster_creator_admin_permissions = true
+
+  access_entries = {
+    clusterAdmin = {
+      principal_arn = "arn:aws:iam::${var.aws_account_id}:role/${var.aws_assume_role}"
+      policy_associations = {
+        clusterAdmin = {
+          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+          access_scope = {
+            type = "cluster"
+          }
+        }
+      }
+    }
+  }
 
   vpc_id                   = data.aws_vpc.vpc.id
   subnet_ids               = data.aws_subnets.cluster_private_subnets.ids
@@ -49,4 +63,5 @@ module "eks" {
       }
     }
   }
+
 }
