@@ -15,11 +15,11 @@ write1passwordField empc-lab "psk-aws-${cluster_name}" kubeconfig-base64 "$kubec
 write1passwordField empc-lab "psk-aws-${cluster_name}" cluster-url $(terraform output -raw cluster_url)
 write1passwordField empc-lab "psk-aws-${cluster_name}" base64-certificate-authority-data $(terraform output -raw cluster_public_certificate_authority_data)
 
-# # apply baseline cluster resources
-# # psk-system namespace
-# kubectl apply -f tpl/psk-system-namespace.yaml
-# # twdps-core-labs-team oidc admin clusterrolebinding
-# kubectl apply -f tpl/psk-admin-clusterrolebinding.yaml
+# apply baseline cluster resources
+# psk-system namespace
+kubectl apply -f tpl/psk-system-namespace.yaml
+# twdps-core-labs-team oidc admin clusterrolebinding
+kubectl apply -f tpl/psk-admin-clusterrolebinding.yaml
 
 # aws eks update-kubeconfig --name sbx-i01-aws-us-east-1 \
 # --region "us-east-1" \
