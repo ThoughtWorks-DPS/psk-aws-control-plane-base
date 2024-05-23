@@ -50,3 +50,18 @@ module "eks" {
     }
   }
 }
+
+module "auth" {
+  source  = "terraform-aws-modules/eks/aws//modules/aws-auth"
+  version = "20.11.1"
+
+  manage_aws_auth_configmap = true
+
+  aws_auth_roles = [
+    {
+      username = var.aws_assume_role
+      rolearn  = "arn:aws:iam::${var.aws_account_id}:role/${var.aws_assume_role}"
+      groups   = ["system:masters"]
+    }
+  ]
+}
