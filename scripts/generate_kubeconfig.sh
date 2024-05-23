@@ -12,5 +12,5 @@ awsAssumeRole "$AWS_ACCOUNT_ID" "$AWS_ASSUME_ROLE"
 
 aws eks update-kubeconfig --name "$cluster_name" \
 --region "$AWS_REGION" \
---role-arn "arn:aws:iam::$AWS_ACCOUNT_ID:role/$AWS_ASSUME_ROLE \
+--role-arn "arn:aws:iam::$AWS_ACCOUNT_ID:role/$AWS_ASSUME_ROLE" \
 --kubeconfig ~/.kube/config
