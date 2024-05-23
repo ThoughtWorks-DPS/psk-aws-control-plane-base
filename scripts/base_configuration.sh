@@ -20,23 +20,3 @@ write1passwordField empc-lab "psk-aws-${cluster_name}" base64-certificate-author
 kubectl apply -f tpl/psk-system-namespace.yaml
 # twdps-core-labs-team oidc admin clusterrolebinding
 kubectl apply -f tpl/psk-admin-clusterrolebinding.yaml
-
-# aws eks update-kubeconfig --name sbx-i01-aws-us-east-1 \
-# --region "us-east-1" \
-# --role-arn "arn:aws:iam::090950721693:role/PSKRoles/PSKControlPlaneBaseRole" \
-# --kubeconfig kubeconfig
-
-
-
-# aws eks create-access-entry --cluster-name sbx-i01-aws-us-east-1 --principal-arn "arn:aws:iam::090950721693:role/PSKRoles/PSKControlPlaneBaseRole"
-
-# aws eks associate-access-policy --cluster-name sbx-i01-aws-us-east-1 \
-#   --principal-arn "arn:aws:iam::090950721693:role/PSKRoles/PSKControlPlaneBaseRole" \
-#   --policy-arn "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy" \
-#   --access-scope type=cluster
-
-
-
-# with what has been created now:
-
-# PSKservice account can assume role to generate kubeconfig, and then it can access cluster without an assumed role, cause sthe lubeconfig does it.

@@ -48,10 +48,13 @@ commands:
         type: string
     steps:
       - run:
-          name: run cluster configuration tests
+          name: run aws integration tests
           environment:
             CLUSTER: << parameters.cluster >>
-          command: bash scripts/integration_tests.sh << parameters.cluster >>
+          command: bash scripts/aws_integration_tests.sh << parameters.cluster >>
+      - run:
+          name: run cluster integration tests
+          command: bash scripts/k8s_integration_tests.sh << parameters.cluster >>
 
   base-configuration-validation:
     description: write kubeconfig, cluster-url, and base64-certificate-authority-data to vault
@@ -67,8 +70,8 @@ commands:
       - run:
           name: store cluster identifiers and apply baseline configuration
           command: bash scripts/base_configuration.sh << parameters.cluster >>
-      # - run-integration-tests:
-      #     cluster: << parameters.cluster >>
+      - run-integration-tests:
+          cluster: << parameters.cluster >>
 
 # jobs:
 
