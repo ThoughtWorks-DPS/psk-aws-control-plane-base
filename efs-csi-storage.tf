@@ -33,10 +33,6 @@ output "eks_efs_csi_storage_mount_target_dns_names" {
   value = module.efs_csi_storage.mount_target_dns_names
 }
 
-# output "eks_efs_csi_storage_mount_target_ids" {
-#   value = module.efs_csi_storage.mount_target_ids.*
-# }
-
 output "eks_efs_csi_storage_security_group_id" {
   value = module.efs_csi_storage.security_group_id
 }

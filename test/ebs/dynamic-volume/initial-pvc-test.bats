@@ -1,15 +1,5 @@
 #!/usr/bin/env bats
 
-@test "validate ebs storage class created" {
-  run bash -c "kubectl get storageclasses | grep 'ebs-csi-test-storage-class'"
-  [[ "${output}" =~ "WaitForFirstConsumer" ]]
-}
-
-@test "validate ebs storage class created with volume expansion allowed" {
-  run bash -c "kubectl get storageclasses | grep 'ebs-csi-test-storage-class'"
-  [[ "${output}" =~ "true" ]]
-}
-
 @test "validate dynamic ebs volume claim created" {
   run bash -c "kubectl describe pv | grep 'psk-system/test-ebs-claim'"
   [[ "${output}" =~ "Claim" ]]

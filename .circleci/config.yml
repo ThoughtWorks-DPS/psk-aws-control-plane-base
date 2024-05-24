@@ -58,6 +58,9 @@ commands:
       - run:
           name: run ebs storage class tests
           command: bash scripts/ebs_storage_class_tests.sh << parameters.cluster >>
+      - run:
+          name: run efs storage class tests
+          command: bash scripts/efs_storage_class_tests.sh << parameters.cluster >>
 
   base-configuration-validation:
     description: write kubeconfig, cluster-url, and base64-certificate-authority-data to vault

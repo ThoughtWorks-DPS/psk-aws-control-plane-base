@@ -6,3 +6,10 @@
 	<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/ThoughtWorks-DPS/psk-aws-control-plane-base"></a> <a href="https://aws.amazon.com"><img src="https://img.shields.io/badge/-deployed-blank.svg?style=social&logo=amazon"></a>
 	</p>
 </div>
+
+
+###
+conventions for storage class targets:
+$cluster_name-ebs-csi-storage-class
+$cluster_name-efs-csi-storage-class:
+    pull file-system-id from cluster info using cli

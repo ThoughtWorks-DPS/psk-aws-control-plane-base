@@ -9,3 +9,9 @@ source.env
 kubeconfig
 bash-functions.sh
 credentials
+test/ebs/dynamic-volume/pvc.yaml
+test/ebs/block-volume/pvc.yaml
+test/efs/dynamic-volume/pvc.yaml
+test/efs/multi-write/pvc.yaml
+tpl/ebs-csi-storage-class.yaml
+tpl/efs-csi-storage-class.yaml
