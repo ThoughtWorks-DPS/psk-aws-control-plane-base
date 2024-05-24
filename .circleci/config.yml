@@ -153,24 +153,6 @@ workflows:
             - approve sbx-i01-aws-us-east-1 changes
           filters: *on-push-main
 
-      # ====================================================== tear down
-
-      - approve tear down:
-          type: approval
-          filters: *on-push-main
-
-      - terraform/destroy:
-          name: destroy sbx-i01-aws-us-east-1
-          context: *context
-          executor-image: *executor-image
-          workspace: sbx-i01-aws-us-east-1
-          before-destroy:
-            - set-environment:
-                cluster: sbx-i01-aws-us-east-1
-          requires:
-            - approve tear down
-          filters: *on-push-main
-
   #     - do/schedule-pipeline:
   #         name: Deploy sandbox nightly schedule
   #         context: *context
@@ -239,3 +221,21 @@ workflows:
   #         release-pipeline-name: release
   #         custom-template-file: nightly.yml
   #         filters: *on-push-main
+
+      # ====================================================== tear down
+
+      # - approve tear down:
+      #     type: approval
+      #     filters: *on-push-main
+
+      # - terraform/destroy:
+      #     name: destroy sbx-i01-aws-us-east-1
+      #     context: *context
+      #     executor-image: *executor-image
+      #     workspace: sbx-i01-aws-us-east-1
+      #     before-destroy:
+      #       - set-environment:
+      #           cluster: sbx-i01-aws-us-east-1
+      #     requires:
+      #       - approve tear down
+      #     filters: *on-push-main

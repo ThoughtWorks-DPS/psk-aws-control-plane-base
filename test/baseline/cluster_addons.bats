@@ -1,12 +1,12 @@
 #!/usr/bin/env bats
 
-@test "evaluate ebi csi deployment" {
-  run bash -c "kubectl get po -n kube-system -o wide | grep 'ebs-csi-node'"
+@test "evaluate kubeproxy" {
+  run bash -c "kubectl get po -n kube-system -o wide | grep 'kube-proxy'"
   [[ "${output}" =~ "Running" ]]
 }
 
-@test "evaluate kubeproxy" {
-  run bash -c "kubectl get po -n kube-system -o wide | grep 'kube-proxy'"
+@test "evaluate ebi csi deployment" {
+  run bash -c "kubectl get po -n kube-system -o wide | grep 'ebs-csi-node'"
   [[ "${output}" =~ "Running" ]]
 }
 
