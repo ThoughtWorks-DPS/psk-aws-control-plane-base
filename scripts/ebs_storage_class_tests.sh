@@ -47,7 +47,7 @@ EOF
 kubectl apply -f test/ebs/dynamic-volume/pvc.yaml
 
 # test expanded persistent volume claim
-sleep 60
+sleep 90
 bats test/ebs/dynamic-volume/expanded-pvc-test.bats
 
 kubectl delete -f test/ebs/dynamic-volume/dynamic-volume-test-pod.yaml
