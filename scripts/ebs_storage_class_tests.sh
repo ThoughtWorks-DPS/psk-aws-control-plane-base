@@ -25,7 +25,7 @@ kubectl apply -f test/ebs/dynamic-volume/pvc.yaml
 
 # test persistent volume claim
 kubectl apply -f test/ebs/dynamic-volume/dynamic-volume-test-pod.yaml
-sleep 15
+sleep 30
 bats test/ebs/dynamic-volume/initial-pvc-test.bats
 
 # expand dynamic volume size
