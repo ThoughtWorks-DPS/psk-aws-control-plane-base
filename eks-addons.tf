@@ -74,9 +74,7 @@ module "eks_addons" {
       })
     }
 
-    # aws-mountpoint-s3-csi-driver
-    # aws-guardduty-agent
-    # eks-pod-identity-agent = { most_recent = true }
+    eks-pod-identity-agent = { most_recent = true }
   }
 }
 

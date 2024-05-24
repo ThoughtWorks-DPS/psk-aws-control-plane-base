@@ -13,3 +13,8 @@ conventions for storage class targets:
 $cluster_name-ebs-csi-storage-class
 $cluster_name-efs-csi-storage-class:
     pull file-system-id from cluster info using cli
+
+
+## developer
+
+investigate addon guardduty, s3 csi mount
