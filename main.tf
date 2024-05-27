@@ -63,6 +63,10 @@ module "eks" {
     }
   }
 
+  tags = {
+    "karpenter.sh/discovery" = var.cluster_name
+  }
+
 }
 
 output "cluster_url" {
@@ -76,4 +80,30 @@ output "cluster_oidc_issuer_url" {
 
 output "cluster_public_certificate_authority_data" {
   value = module.eks.cluster_certificate_authority_data
+}
+
+module "karpenter" {
+  source  = "terraform-aws-modules/eks/aws//modules/karpenter"
+  version = "20.11.1"
+
+  cluster_name = module.eks.cluster_name
+
+  enable_pod_identity             = true
+  create_pod_identity_association = true
+
+  node_iam_role_additional_policies = {
+    AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  }
+}
+
+output "karpenter_iam_role_arn" {
+  value = module.karpenter.iam_role_arn
+}
+
+output "karpenter_node_iam_role_name" {
+  value = module.karpenter.node_iam_role_name
+}
+
+output "karpenter_sqs_queue_name" {
+  value = module.karpenter.queue_name
 }

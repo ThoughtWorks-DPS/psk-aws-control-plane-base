@@ -5,8 +5,23 @@
   [[ "${output}" =~ "Running" ]]
 }
 
-@test "evaluate ebi csi deployment" {
+@test "evaluate ebs csi node deployment" {
   run bash -c "kubectl get po -n kube-system -o wide | grep 'ebs-csi-node'"
+  [[ "${output}" =~ "Running" ]]
+}
+
+@test "evaluate ebs csi controller deployment" {
+  run bash -c "kubectl get po -n kube-system -o wide | grep 'ebs-csi-controller'"
+  [[ "${output}" =~ "Running" ]]
+}
+
+@test "evaluate efs csi node deployment" {
+  run bash -c "kubectl get po -n kube-system -o wide | grep 'efs-csi-node'"
+  [[ "${output}" =~ "Running" ]]
+}
+
+@test "evaluate efs csi controller deployment" {
+  run bash -c "kubectl get po -n kube-system -o wide | grep 'efs-csi-controller'"
   [[ "${output}" =~ "Running" ]]
 }
 
@@ -17,5 +32,15 @@
 
 @test "evaluate core-dns" {
   run bash -c "kubectl get po -n kube-system -o wide | grep 'coredns'"
+  [[ "${output}" =~ "Running" ]]
+}
+
+@test "evaluate eks-pod-identity-agent" {
+  run bash -c "kubectl get po -n kube-system -o wide | grep 'eks-pod-identity-agent'"
+  [[ "${output}" =~ "Running" ]]
+}
+
+@test "evaluate karpenter" {
+  run bash -c "kubectl get po -n kube-system -o wide | grep 'karpenter'"
   [[ "${output}" =~ "Running" ]]
 }

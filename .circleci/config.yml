@@ -7,7 +7,7 @@ orbs:
 
 globals:
   - &context empc-lab
-  - &executor-image twdps/circleci-infra-aws:alpine-7.3.0
+  - &executor-image twdps/circleci-infra-aws:alpine-7.4.0
 
 on-push-main: &on-push-main
   branches:
@@ -61,6 +61,9 @@ commands:
       - run:
           name: run efs storage class tests
           command: bash scripts/efs_storage_class_tests.sh << parameters.cluster >>
+      - run:
+          name: run karpenter node pool tests
+          command: bash scripts/node_pool_tests.sh
 
   base-configuration-validation:
     description: write kubeconfig, cluster-url, and base64-certificate-authority-data to vault
@@ -222,20 +225,24 @@ workflows:
   #         custom-template-file: nightly.yml
   #         filters: *on-push-main
 
-      # ====================================================== tear down
+  # ====================================================== tear down
+  # tear down psk control plane base:
+  #   when:
+  #     not:
+  #       equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+  #   jobs:
+  #     - approve tear down:
+  #         type: approval
+  #         filters: *on-push-main
 
-      # - approve tear down:
-      #     type: approval
-      #     filters: *on-push-main
-
-      # - terraform/destroy:
-      #     name: destroy sbx-i01-aws-us-east-1
-      #     context: *context
-      #     executor-image: *executor-image
-      #     workspace: sbx-i01-aws-us-east-1
-      #     before-destroy:
-      #       - set-environment:
-      #           cluster: sbx-i01-aws-us-east-1
-      #     requires:
-      #       - approve tear down
-      #     filters: *on-push-main
+  #     - terraform/destroy:
+  #         name: destroy sbx-i01-aws-us-east-1
+  #         context: *context
+  #         executor-image: *executor-image
+  #         workspace: sbx-i01-aws-us-east-1
+  #         before-destroy:
+  #           - set-environment:
+  #               cluster: sbx-i01-aws-us-east-1
+  #         requires:
+  #           - approve tear down
+  #         filters: *on-push-main

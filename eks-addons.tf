@@ -123,14 +123,3 @@ module "efs_csi_irsa_role" {
     }
   }
 }
-
-# module "karpenter" {
-#   source = "terraform-aws-modules/eks/aws//modules/karpenter"
-#   version = "20.10.0"
-
-#   cluster_name = var.cluster_name
-
-#   create_node_iam_role = false
-#   node_iam_role_arn    = module.eks.eks_managed_node_groups[var.management_node_group_name].iam_role_arn
-#   create_access_entry  = false
-# }

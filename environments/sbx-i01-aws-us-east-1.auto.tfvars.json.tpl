@@ -17,5 +17,7 @@
   "management_node_group_desired_size": "1",
   "management_node_group_max_size": "3",
   "management_node_group_min_size": "1",
-  "management_node_group_instance_types": ["t4g.2xlarge","m6g.2xlarge","m7g.2xlarge"]
+  "management_node_group_instance_types": ["t4g.2xlarge","m6g.2xlarge","m7g.2xlarge"],
+
+  "karpenter_chart_version": "0.36.2"
 }

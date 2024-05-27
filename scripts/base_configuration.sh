@@ -12,11 +12,12 @@ write1passwordField empc-lab "psk-aws-${cluster_name}" cluster-url $(terraform o
 write1passwordField empc-lab "psk-aws-${cluster_name}" base64-certificate-authority-data $(terraform output -raw cluster_public_certificate_authority_data)
 write1passwordField empc-lab "psk-aws-${cluster_name}" eks_efs_csi_storage_id $(terraform output -raw eks_efs_csi_storage_id)
 eks_efs_csi_storage_id=$(terraform output -raw eks_efs_csi_storage_id)
+karpenter_node_iam_role_name=$(terraform output -raw karpenter_node_iam_role_name)
 
 # apply baseline cluster resources ================================
 
-# create psk-system namespace
-kubectl apply -f tpl/psk-system-namespace.yaml
+# create psk-system and karpenter namespaces
+kubectl apply -f tpl/psk-system-namespaces.yaml
 
 # create twdps-core-labs-team oidc admin clusterrolebinding
 kubectl apply -f tpl/psk-admin-clusterrolebinding.yaml
@@ -56,3 +57,25 @@ parameters:
   reuseAccessPoint: "false"
 EOF
 kubectl apply -f tpl/efs-csi-storage-class.yaml
+
+# create default Node Class, along with amd and arm node pools
+cat <<EOF > tpl/default-node-class.yaml
+---
+apiVersion: karpenter.k8s.aws/v1beta1
+kind: EC2NodeClass
+metadata:
+  name: default-node-class
+  namespace: karpenter
+spec:
+  amiFamily: Bottlerocket
+  role: $karpenter_node_iam_role_name
+  subnetSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: $cluster_name-vpc
+  securityGroupSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: $cluster_name
+EOF
+kubectl apply -f tpl/default-node-class.yaml
+kubectl apply -f tpl/default-amd-node-pool.yaml
+kubectl apply -f tpl/default-arm-node-pool.yaml

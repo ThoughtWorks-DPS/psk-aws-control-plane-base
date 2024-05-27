@@ -15,3 +15,4 @@ test/efs/dynamic-volume/pvc.yaml
 test/efs/multi-write/pvc.yaml
 tpl/ebs-csi-storage-class.yaml
 tpl/efs-csi-storage-class.yaml
+tpl/default-node-class.yaml

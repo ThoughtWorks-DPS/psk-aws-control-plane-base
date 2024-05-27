@@ -114,3 +114,8 @@ variable "management_node_group_instance_types" {
   description = "list of allowable ec2 instance types"
   type        = list(string)
 }
+
+variable "karpenter_chart_version" {
+  description = "Karpenter Helm chart version to be installed"
+  type        = string
+}
