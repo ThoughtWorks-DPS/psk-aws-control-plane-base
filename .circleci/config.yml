@@ -156,6 +156,43 @@ workflows:
             - approve sbx-i01-aws-us-east-1 changes
           filters: *on-push-main
 
+  release prod-i01-aws-us-east-2 control plane base:
+    jobs:
+      - terraform/plan:
+          name: plan prod-i01-aws-us-east-2 changes
+          context: *context
+          executor-image: *executor-image
+          workspace: prod-i01-aws-us-east-2
+          tfc-workspace: psk-aws-control-plane-base-prod-i01-aws-us-east-2
+          tfc-organization: twdps
+          before-plan:
+            - set-environment:
+                cluster: prod-i01-aws-us-east-2
+          filters: *on-tag-main
+
+      - approve prod-i01-aws-us-east-2 changes:
+          type: approval
+          requires:
+            - plan prod-i01-aws-us-east-2 changes
+          filters: *on-tag-main
+
+      - terraform/apply:
+          name: apply prod-i01-aws-us-east-2 changes
+          context: *context
+          executor-image: *executor-image
+          workspace: prod-i01-aws-us-east-2
+          before-apply:
+            - set-environment:
+                cluster: prod-i01-aws-us-east-2
+          after-apply:
+            - base-configuration-validation:
+                cluster: prod-i01-aws-us-east-2
+          requires:
+            - approve prod-i01-aws-us-east-2 changes
+          filters: *on-push-main
+
+
+
   #     - do/schedule-pipeline:
   #         name: Deploy sandbox nightly schedule
   #         context: *context
@@ -188,19 +225,6 @@ workflows:
   #               env-credentials: prod
   #         filters: *on-push-main
 
-
-  # production release:
-  #   when:
-  #     not:
-  #       equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
-  #   jobs:
-  #     - launch-dynamic-pipeline:
-  #         name: generate release pipeline
-  #         context: *context
-  #         release-pipeline-name: release
-  #         filters: *on-tag-main
-
-
   # run nightly sandbox validation jobs:
   #   when:
   #     and:
@@ -224,6 +248,8 @@ workflows:
   #         release-pipeline-name: release
   #         custom-template-file: nightly.yml
   #         filters: *on-push-main
+
+
 
   # ====================================================== tear down
   # tear down psk control plane base:
