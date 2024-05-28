@@ -189,7 +189,7 @@ workflows:
                 cluster: prod-i01-aws-us-east-2
           requires:
             - approve prod-i01-aws-us-east-2 changes
-          filters: *on-push-main
+          filters: *on-tag-main
 
 
 
