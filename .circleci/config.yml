@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   terraform: twdps/terraform@3.0.1
+  kube: twdps/kube-ops@1.0.0
   op: twdps/onepassword@3.0.0
   do: twdps/pipeline-events@4.1.0
 
@@ -64,6 +65,8 @@ commands:
       - run:
           name: run karpenter node pool tests
           command: bash scripts/node_pool_tests.sh
+      - kube/cis-benchmark:
+          benchmark: aws
 
   base-configuration-validation:
     description: write kubeconfig, cluster-url, and base64-certificate-authority-data to vault
