@@ -65,7 +65,7 @@ commands:
       - run:
           name: run karpenter node pool tests
           command: bash scripts/node_pool_tests.sh
-      - kube/cis-benchmark:
+      - kube/cis-benchmarks:
           benchmark: aws
 
   base-configuration-validation:
