@@ -82,6 +82,7 @@ module "vpc_cni_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "~> 5.39.1"
 
+  role_path             = "/PSKRoles/"
   role_name             = "${var.cluster_name}-vpc-cni"
   attach_vpc_cni_policy = true
   vpc_cni_enable_ipv4   = true
@@ -98,6 +99,7 @@ module "ebs_csi_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "~> 5.39.1"
 
+  role_path             = "/PSKRoles/"
   role_name             = "${var.cluster_name}-ebs-csi-controller-sa"
   attach_ebs_csi_policy = true
 
@@ -113,6 +115,7 @@ module "efs_csi_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "~> 5.39.1"
 
+  role_path             = "/PSKRoles/"
   role_name             = "${var.cluster_name}-efs-csi-controller-sa"
   attach_efs_csi_policy = true
 
