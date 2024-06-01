@@ -195,6 +195,9 @@ workflows:
             Automatically triggers nightly run of integration-test job
           hours-of-day: "[1]"
           days-of-week: "[\"SUN\"]"
+          before-schedule:
+            - op/env:
+                env-file: op.prod-i01-aws-us-east-2.env
           filters: *on-tag-main
 
   run nightly integration test:
