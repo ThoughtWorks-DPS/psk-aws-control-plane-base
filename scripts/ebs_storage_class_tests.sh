@@ -73,7 +73,7 @@ kubectl apply -f test/ebs/block-volume/pvc.yaml
 
 # test block-mode volume
 kubectl apply -f test/ebs/block-volume/block-volume-test-pod.yaml
-sleep 20
+sleep 45
 bats test/ebs/block-volume/block-volume-claim-test.bats
 
 kubectl delete -f test/ebs/block-volume/block-volume-test-pod.yaml
