@@ -119,3 +119,24 @@ variable "karpenter_chart_version" {
   description = "Karpenter Helm chart version to be installed"
   type        = string
 }
+
+variable "oidc_client_id" {
+  description = "Auth0 client id"
+  type        = string
+  sensitive   = true
+}
+
+variable "oidc_groups_claim" {
+  description = "authorization claim from jwt token"
+  type        = string
+}
+
+variable "oidc_identity_provider_config_name" {
+  description = "oidc provider name"
+  type        = string
+}
+
+variable "oidc_issuer_url" {
+  description = "oidc client url"
+  type        = string
+}

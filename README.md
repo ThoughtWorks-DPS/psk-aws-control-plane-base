@@ -42,6 +42,8 @@ At scale, each role may include multiple clusters. Note that the platform custom
 		* sqs and eventbridge deployed
 		* arm and amd NodePools resource defined
 		* target desired architecture with `kubernetes.io/arch` = "arm64" | "amd64"
+* psk-system namespace created
+* admin ClusterRolebinding created for ThoughtWorks-DPS/twdps-core-labs-team claim
 
 ## EKS Best Practices Guides
 

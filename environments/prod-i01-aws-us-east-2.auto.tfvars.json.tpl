@@ -17,7 +17,12 @@
   "management_node_group_desired_size": "1",
   "management_node_group_max_size": "3",
   "management_node_group_min_size": "1",
-  "management_node_group_instance_types": ["t4g.2xlarge","m6g.2xlarge","m7g.2xlarge"],
+  "management_node_group_instance_types": ["t4g.2xlarge","m6g.2xlarge","m7g.2xlarge","c7g.4xlarge"],
 
-  "karpenter_chart_version": "0.36.2"
+  "karpenter_chart_version": "0.36.2",
+
+  "oidc_client_id": "{{ op://empc-lab/svc-auth0/pskctl-cli-client-id }}",
+  "oidc_groups_claim": "https://github.org/ThoughtWorks-DPS/teams",
+  "oidc_identity_provider_config_name": "Auth0",
+  "oidc_issuer_url": "https://pskctl.us.auth0.com/"
 }
