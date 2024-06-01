@@ -1,4 +1,5 @@
 source.env
+.DS_Store
 .terraform*
 .python-version
 .ruby-version
