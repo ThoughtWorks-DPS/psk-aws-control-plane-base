@@ -65,7 +65,6 @@ Karpenter managed nodepools will automatically update to the correct, latest pat
 * add `taint` step that checks for existence of cluster (in case of new deployment) and then taints management MNG for node replacement.  
 * observability solution to replace datadog not yet implemented
 
-
 Investigate addons:  
 - guardduty
 - s3 csi mount
