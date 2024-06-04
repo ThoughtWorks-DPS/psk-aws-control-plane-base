@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   terraform: twdps/terraform@3.0.1
-  kube: twdps/kube-ops@1.0.0
+  kube: twdps/kube-ops@1.1.2
   op: twdps/onepassword@3.0.0
   do: twdps/pipeline-events@4.1.0
 
@@ -96,6 +96,8 @@ jobs:
       - checkout
       - set-environment:
           cluster: << parameters.cluster >>
+      - kube/op-config:
+          op-value: empc-lab/psk-aws-<< parameters.cluster>>/kubeconfig-base64
       - run-integration-tests:
           cluster: << parameters.cluster >>
 
@@ -214,23 +216,23 @@ workflows:
           context: *context
 
   # ====================================================== tear down
-  # tear down psk control plane base:
-  #   when:
-  #     not:
-  #       equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
-  #   jobs:
-  #     - approve tear down:
-  #         type: approval
-  #         filters: *on-push-main
+  tear down psk control plane base:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+    jobs:
+      - approve tear down:
+          type: approval
+          filters: *on-push-main
 
-  #     - terraform/destroy:
-  #         name: destroy sbx-i01-aws-us-east-1
-  #         context: *context
-  #         executor-image: *executor-image
-  #         workspace: sbx-i01-aws-us-east-1
-  #         before-destroy:
-  #           - set-environment:
-  #               cluster: sbx-i01-aws-us-east-1
-  #         requires:
-  #           - approve tear down
-  #         filters: *on-push-main
+      - terraform/destroy:
+          name: destroy sbx-i01-aws-us-east-1
+          context: *context
+          executor-image: *executor-image
+          workspace: sbx-i01-aws-us-east-1
+          before-destroy:
+            - set-environment:
+                cluster: sbx-i01-aws-us-east-1
+          requires:
+            - approve tear down
+          filters: *on-push-main
