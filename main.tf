@@ -63,9 +63,21 @@ module "eks" {
     }
   }
 
+  node_security_group_additional_rules = {
+    allow_data_plane_tcp = {
+      description                   = "Allow TCP Protocol Port"
+      protocol                      = "TCP"
+      from_port                     = 1024
+      to_port                       = 65535
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
+  }
+
   tags = {
     "karpenter.sh/discovery" = var.cluster_name
   }
+
 }
 
 resource "aws_eks_identity_provider_config" "auth0_oidc_config" {
