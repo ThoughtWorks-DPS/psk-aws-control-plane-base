@@ -32,10 +32,6 @@ commands:
       cluster:
         description: cluster and tf workspace name
         type: string
-      refresh-management-ng:
-        description: perform tf taint to trigger mng instance upgrade
-        type: boolean
-        default: false
     steps:
       - op/env:
           env-file: op.<< parameters.cluster >>.env
@@ -44,12 +40,6 @@ commands:
           tpl-file: << parameters.cluster >>.auto.tfvars.json
       - terraform/terraformrc
       - do/bash-functions
-      - when:
-          condition: << parameters.refresh-management-ng >>
-          steps:
-            - run:
-                name: taint eks-managed-nodegroup for refresh
-                command: terraform taint "module.eks.module.eks_managed_node_group[\"management-arm-rkt-mng\"].aws_eks_node_group.this[0]"
 
   run-integration-tests:
     description: run cluster configuration tests
@@ -92,6 +82,17 @@ commands:
           command: bash scripts/base_configuration.sh << parameters.cluster >>
       - run-integration-tests:
           cluster: << parameters.cluster >>
+
+  replace-management-node-group-nodes:
+      parameters:
+        cluster:
+          description: cluster and tf workspace name
+          type: string
+          default: ""
+      steps:
+        - run:
+            name: taint eks-managed-nodegroup for refresh
+            command: terraform taint "module.eks.module.eks_managed_node_group[\"management-arm-rkt-mng\"].aws_eks_node_group.this[0]"
 
 jobs:
 
@@ -157,7 +158,9 @@ workflows:
           before-apply:
             - set-environment:
                 cluster: sbx-i01-aws-us-east-1
-                refresh-management-ng: true
+          after-terraform-init:
+            - replace-management-node-group-nodes:
+                cluster: sbx-i01-aws-us-east-1
           after-apply:
             - base-configuration-validation:
                 cluster: sbx-i01-aws-us-east-1
@@ -193,7 +196,6 @@ workflows:
           before-apply:
             - set-environment:
                 cluster: prod-i01-aws-us-east-2
-                refresh-management-ng: true
           after-apply:
             - base-configuration-validation:
                 cluster: prod-i01-aws-us-east-2
