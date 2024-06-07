@@ -3,7 +3,7 @@ serviceAccount:
     eks.amazonaws.com/role-arn: ${iam_role_arn}
 imagePullPolicy: Always
 podDisruptionBudget:
-  maxUnavailable: 0
+  maxUnavailable: 1
 replicas: 1
 nodeSelector:
   nodegroup: ${management_node_group_name}
