@@ -24,9 +24,9 @@ At scale, each role may include multiple clusters. Note that the platform custom
 ## Configuration
 
 * authentication mode = `API`
-* infrastructure configuration access via access_entries
+	* infrastructure access configuration via access_entries
 * control plane logging default = "api", "audit", "authenticator", "controllerManager", "scheduler"
-* control plan internals encrypted using managed kms key
+* control plan internals encrypted using aws managed kms key
 * arm-based Managed Node Group for dedicated management pool with specific toleration requirements
 * eks addons:
   * vpc-cni
@@ -40,7 +40,7 @@ At scale, each role may include multiple clusters. Note that the platform custom
 		* filesystem-id stored in 1password, make discoverable via platforms/clusters API
 	* karpenter
 		* sqs and eventbridge deployed
-		* arm and amd NodePools resource defined
+		* arm and amd NodePools resources defined
 		* target desired architecture with `kubernetes.io/arch` = "arm64" | "amd64"
 * psk-system namespace created
 * admin ClusterRolebinding created for ThoughtWorks-DPS/twdps-core-labs-team claim
@@ -62,9 +62,5 @@ The `taint` step results in the MNG nodes updating to the correct, latest patch 
 Karpenter managed nodepools will automatically update to the correct, latest patch version each week.  
 
 **TODO**  
-* add `taint` step that checks for existence of cluster (in case of new deployment) and then taints management MNG for node replacement.  
-* observability solution to replace datadog not yet implemented
 
-Investigate addons:  
-- guardduty
-- s3 csi mount
+* observability solution to replace datadog not yet implemented
