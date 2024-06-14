@@ -49,7 +49,7 @@ At scale, each role may include multiple clusters. Note that the platform custom
 
 See [implementation notes](EKS-Best-Practices-Guides.md).  
 
-## Maintainer
+## Maintainers
 
 **upgrade kubernetes and addon version**  
 
@@ -58,6 +58,8 @@ Change `eks_version` in the environments json to initiate upgrade to new EKS ver
 **managment node group**  
 
 The `taint` step results in the MNG nodes updating to the correct, latest patch version.  
+
+**general data plane ndoes**  
 
 Karpenter managed nodepools will automatically update to the correct, latest patch version each week.  
 

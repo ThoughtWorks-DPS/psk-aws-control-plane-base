@@ -22,8 +22,6 @@ on-tag-main: &on-tag-main
   tags:
     only: /.*/
 
-# ============================================================ commands and jobs
-
 commands:
 
   set-environment:
@@ -229,45 +227,45 @@ workflows:
           context: *context
       - integration-tests:
           name: nightly prod-i01-aws-us-east-2 integration test
-          cluster: sbx-i01-aws-us-east-1
+          cluster: prod-i01-aws-us-east-2
           context: *context
 
   # ====================================================== tear down
-  tear down psk control plane base:
-    when:
-      not:
-        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
-    jobs:
-      - approve tear down:
-          name: approve teardown sbx
-          type: approval
-          filters: *on-push-main
+  # tear down psk control plane base:
+  #   when:
+  #     not:
+  #       equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+  #   jobs:
+  #     - approve tear down:
+  #         name: approve teardown sbx
+  #         type: approval
+  #         filters: *on-push-main
 
-      - terraform/destroy:
-          name: destroy sbx-i01-aws-us-east-1
-          context: *context
-          executor-image: *executor-image
-          workspace: sbx-i01-aws-us-east-1
-          before-destroy:
-            - set-environment:
-                cluster: sbx-i01-aws-us-east-1
-          requires:
-            - approve teardown sbx
-          filters: *on-push-main
+  #     - terraform/destroy:
+  #         name: destroy sbx-i01-aws-us-east-1
+  #         context: *context
+  #         executor-image: *executor-image
+  #         workspace: sbx-i01-aws-us-east-1
+  #         before-destroy:
+  #           - set-environment:
+  #               cluster: sbx-i01-aws-us-east-1
+  #         requires:
+  #           - approve teardown sbx
+  #         filters: *on-push-main
 
-      - approve tear down:
-          name: approve teardown prod
-          type: approval
-          filters: *on-push-main
+  #     - approve tear down:
+  #         name: approve teardown prod
+  #         type: approval
+  #         filters: *on-push-main
 
-      - terraform/destroy:
-          name: destroy sbx-i01-aws-us-east-1
-          context: *context
-          executor-image: *executor-image
-          workspace: sbx-i01-aws-us-east-1
-          before-destroy:
-            - set-environment:
-                cluster: sbx-i01-aws-us-east-1
-          requires:
-            - approve teardown prod
-          filters: *on-push-main
+  #     - terraform/destroy:
+  #         name: destroy sbx-i01-aws-us-east-1
+  #         context: *context
+  #         executor-image: *executor-image
+  #         workspace: sbx-i01-aws-us-east-1
+  #         before-destroy:
+  #           - set-environment:
+  #               cluster: sbx-i01-aws-us-east-1
+  #         requires:
+  #           - approve teardown prod
+  #         filters: *on-push-main
