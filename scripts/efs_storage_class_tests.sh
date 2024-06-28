@@ -3,6 +3,7 @@ set -eo pipefail
 
 cluster_name=$1
 export AWS_REGION=$(jq -er .aws_region "$cluster_name".auto.tfvars.json)
+efs_eks_cis_storage_id=$(op read op://empc-lab/psk-aws-$cluster_name/eks-efs-csi-storage-id)
 
 # create efs dynamic persistent volume claim
 cat <<EOF > test/efs/dynamic-volume/pvc.yaml
@@ -60,7 +61,7 @@ spec:
   storageClassName: $cluster_name-efs-csi-dynamic-storage
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fs-037543acdbbbfc98f
+    volumeHandle: $efs_eks_cis_storage_id
 EOF
 kubectl apply -f test/efs/multi-write/pvc.yaml
 kubectl apply -f test/efs/multi-write/multi-write-test-pods.yaml

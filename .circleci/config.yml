@@ -57,9 +57,9 @@ commands:
       - run:
           name: run ebs storage class tests
           command: bash scripts/ebs_storage_class_tests.sh << parameters.cluster >>
-      # - run:
-      #     name: run efs storage class tests
-      #     command: bash scripts/efs_storage_class_tests.sh << parameters.cluster >>
+      - run:
+          name: run efs storage class tests
+          command: bash scripts/efs_storage_class_tests.sh << parameters.cluster >>
       - run:
           name: run karpenter node pool tests
           command: bash scripts/node_pool_tests.sh
@@ -91,7 +91,7 @@ commands:
           default: ""
       steps:
         - run:
-            name: taint eks-managed-nodegroup for refresh
+            name: taint eks-managed-nodegroup for complete refresh to latest AWS managed EKS-optimized ami
             command: terraform taint "module.eks.module.eks_managed_node_group[\"management-arm-rkt-mng\"].aws_eks_node_group.this[0]"
 
 jobs:
