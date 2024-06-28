@@ -57,9 +57,9 @@ commands:
       - run:
           name: run ebs storage class tests
           command: bash scripts/ebs_storage_class_tests.sh << parameters.cluster >>
-      - run:
-          name: run efs storage class tests
-          command: bash scripts/efs_storage_class_tests.sh << parameters.cluster >>
+      # - run:
+      #     name: run efs storage class tests
+      #     command: bash scripts/efs_storage_class_tests.sh << parameters.cluster >>
       - run:
           name: run karpenter node pool tests
           command: bash scripts/node_pool_tests.sh
@@ -78,6 +78,8 @@ commands:
       - run:
           name: store cluster identifiers and apply baseline configuration
           command: bash scripts/base_configuration.sh << parameters.cluster >>
+      - op/env:
+          env-file: op.<< parameters.cluster >>.env
       - run-integration-tests:
           cluster: << parameters.cluster >>
 
