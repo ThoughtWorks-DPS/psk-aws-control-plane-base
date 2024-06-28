@@ -10,8 +10,8 @@ kubeconfig=$(cat ~/.kube/config | base64)
 write1passwordField empc-lab "psk-aws-${cluster_name}" kubeconfig-base64 "$kubeconfig"
 write1passwordField empc-lab "psk-aws-${cluster_name}" cluster-url $(terraform output -raw cluster_url)
 write1passwordField empc-lab "psk-aws-${cluster_name}" base64-certificate-authority-data $(terraform output -raw cluster_public_certificate_authority_data)
-write1passwordField empc-lab "psk-aws-${cluster_name}" eks_efs_csi_storage_id $(terraform output -raw eks_efs_csi_storage_id)
-write1passwordField empc-lab "psk-aws-${cluster_name}" cluster_oidc_issuer_url $(terraform output -raw cluster_oidc_issuer_url)
+write1passwordField empc-lab "psk-aws-${cluster_name}" eks-efs-csi-storage-id $(terraform output -raw eks_efs_csi_storage_id)
+write1passwordField empc-lab "psk-aws-${cluster_name}" cluster-oidc-issuer-url $(terraform output -raw cluster_oidc_issuer_url)
 eks_efs_csi_storage_id=$(terraform output -raw eks_efs_csi_storage_id)
 karpenter_node_iam_role_name=$(terraform output -raw karpenter_node_iam_role_name)
 
