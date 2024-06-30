@@ -19,7 +19,7 @@
   "management_node_group_min_size": "1",
   "management_node_group_instance_types": ["t4g.2xlarge","m6g.2xlarge","m7g.2xlarge","c7g.4xlarge"],
 
-  "karpenter_chart_version": "0.36.2",
+  "karpenter_chart_version": "0.37.0",
 
   "oidc_client_id": "{{ op://empc-lab/svc-auth0/dev-pskctl-cli-client-id }}",
   "oidc_groups_claim": "https://github.org/ThoughtWorks-DPS/teams",

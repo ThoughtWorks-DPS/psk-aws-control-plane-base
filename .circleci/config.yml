@@ -202,6 +202,11 @@ workflows:
           after-apply:
             - base-configuration-validation:
                 cluster: prod-i01-aws-us-east-2
+            - do/slack-bot:
+                channel: lab-events
+                message: Release psk-aws-control-plane-base
+                include-link: true
+                include-tag: true
           requires:
             - approve prod-i01-aws-us-east-2 changes
           filters: *on-tag-main
