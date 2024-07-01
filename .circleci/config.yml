@@ -266,13 +266,13 @@ workflows:
           filters: *on-push-main
 
       - terraform/destroy:
-          name: destroy sbx-i01-aws-us-east-1
+          name: destroy prod-i01-aws-us-east-2
           context: *context
           executor-image: *executor-image
-          workspace: sbx-i01-aws-us-east-1
+          workspace: prod-i01-aws-us-east-2
           before-destroy:
             - set-environment:
-                cluster: sbx-i01-aws-us-east-1
+                cluster: prod-i01-aws-us-east-2
           requires:
             - approve teardown prod
           filters: *on-push-main

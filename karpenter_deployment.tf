@@ -1,12 +1,13 @@
 # apply crd updates directly
 resource "helm_release" "karpenter-crd" {
-  namespace  = "kube-system"
-  name       = "karpenter-crd"
-  repository = "oci://public.ecr.aws/karpenter"
-  chart      = "karpenter-crd"
-  version    = var.karpenter_chart_version
-  wait       = true
-  values     = []
+  namespace        = "kube-system"
+  create_namespace = true
+  name             = "karpenter-crd"
+  repository       = "oci://public.ecr.aws/karpenter"
+  chart            = "karpenter-crd"
+  version          = var.karpenter_chart_version
+  wait             = true
+  values           = []
 }
 
 resource "helm_release" "karpenter" {
