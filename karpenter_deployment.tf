@@ -1,6 +1,6 @@
 # apply crd updates directly
 resource "helm_release" "karpenter-crd" {
-  namespace        = "kube-system"
+  namespace        = "karpenter"
   create_namespace = true
   name             = "karpenter-crd"
   repository       = "oci://public.ecr.aws/karpenter"
@@ -12,7 +12,7 @@ resource "helm_release" "karpenter-crd" {
 
 resource "helm_release" "karpenter" {
   depends_on = [helm_release.karpenter-crd]
-  namespace  = "kube-system"
+  namespace  = "karpenter"
   name       = "karpenter"
   repository = "oci://public.ecr.aws/karpenter"
   chart      = "karpenter"
