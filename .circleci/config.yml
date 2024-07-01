@@ -158,9 +158,9 @@ workflows:
           before-apply:
             - set-environment:
                 cluster: sbx-i01-aws-us-east-1
-          after-terraform-init:
-            - replace-management-node-group-nodes:
-                cluster: sbx-i01-aws-us-east-1
+          # after-terraform-init:
+          #   - replace-management-node-group-nodes:
+          #       cluster: sbx-i01-aws-us-east-1
           after-apply:
             - base-configuration-validation:
                 cluster: sbx-i01-aws-us-east-1
