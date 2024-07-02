@@ -92,7 +92,11 @@ commands:
       steps:
         - run:
             name: taint eks-managed-nodegroup for complete refresh to latest AWS managed EKS-optimized ami
-            command: terraform taint "module.eks.module.eks_managed_node_group[\"management-arm-rkt-mng\"].aws_eks_node_group.this[0]"
+            command: |
+              export TAINT=$(jq -er .auto_refresh_management_node_group << parameters.cluster >>.auto.tfvars.json)
+              if [[ "$TAINT" == "true" ]]; then
+                terraform taint "module.eks.module.eks_managed_node_group[\"management-arm-rkt-mng\"].aws_eks_node_group.this[0]"
+              fi
 
 jobs:
 
@@ -158,9 +162,9 @@ workflows:
           before-apply:
             - set-environment:
                 cluster: sbx-i01-aws-us-east-1
-          # after-terraform-init:
-          #   - replace-management-node-group-nodes:
-          #       cluster: sbx-i01-aws-us-east-1
+          after-terraform-init:
+            - replace-management-node-group-nodes:
+                cluster: sbx-i01-aws-us-east-1
           after-apply:
             - base-configuration-validation:
                 cluster: sbx-i01-aws-us-east-1
