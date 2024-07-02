@@ -20,6 +20,9 @@ module "eks_addons" {
     coredns = {
       most_recent = true
       configuration_values = jsonencode({
+        autoScaling = {
+          "enabled" = "true"
+        }
         nodeSelector = {
           "node.kubernetes.io/role" = "management"
         }
