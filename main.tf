@@ -77,7 +77,6 @@ module "eks" {
   tags = {
     "karpenter.sh/discovery" = var.cluster_name
   }
-
 }
 
 resource "aws_eks_identity_provider_config" "auth0_oidc_config" {
@@ -108,7 +107,7 @@ output "cluster_public_certificate_authority_data" {
 
 module "karpenter" {
   source  = "terraform-aws-modules/eks/aws//modules/karpenter"
-  version = "20.14.0"
+  version = "20.15.0"
 
   cluster_name = module.eks.cluster_name
 
