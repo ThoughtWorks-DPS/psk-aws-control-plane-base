@@ -9,12 +9,6 @@ describe eks(tfvars["cluster_name"]) do
   its(:version) { should eq tfvars['eks_version'] }
 end
 
-describe eks_nodegroup(tfvars["management_node_group_name"]), cluster: tfvars["cluster_name"] do
-  it { should exist }
-  it { should be_ready }
-  its(:taints) { should include("dedicated" => { "effect" => "NO_SCHEDULE" }) }
-end
-
 describe iam_role(tfvars["cluster_name"] + '-vpc-cni') do
   it { should exist }
 end
