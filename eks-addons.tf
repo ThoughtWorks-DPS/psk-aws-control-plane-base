@@ -1,6 +1,6 @@
 module "eks_addons" {
   source     = "aws-ia/eks-blueprints-addons/aws"
-  version    = "1.16.3"
+  version    = "1.19.0"
   depends_on = [module.eks]
 
   cluster_name      = module.eks.cluster_name
@@ -83,7 +83,7 @@ module "eks_addons" {
 
 module "vpc_cni_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "~> 5.40.0"
+  version = "~> 5.48.0"
 
   role_path             = "/PSKRoles/"
   role_name             = "${var.cluster_name}-vpc-cni"
@@ -100,7 +100,7 @@ module "vpc_cni_irsa_role" {
 
 module "ebs_csi_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "~> 5.40.0"
+  version = "~> 5.48.0"
 
   role_path             = "/PSKRoles/"
   role_name             = "${var.cluster_name}-ebs-csi-controller-sa"
@@ -116,7 +116,7 @@ module "ebs_csi_irsa_role" {
 
 module "efs_csi_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "~> 5.40.0"
+  version = "~> 5.48.0"
 
   role_path             = "/PSKRoles/"
   role_name             = "${var.cluster_name}-efs-csi-controller-sa"
