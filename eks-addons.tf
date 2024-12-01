@@ -78,7 +78,6 @@ module "eks_addons" {
     }
 
     eks-pod-identity-agent = { most_recent = true }
-    observability_tag      = null
   }
 }
 
