@@ -7,7 +7,6 @@
 	</p>
 </div>
 
-
 This `control plane base` pipeline is effectively limited to all, and only, those components of EKS that are managed by AWS. Deployments, version changes, and removal of the associated resource belong to AWS in the shared-responsibility model of IaaS vendor managed services. The pipeline owner directs only 'when' such changes occur by specifying version changes in the environment configuration or other similar practices of notifying AWS of a change to be made.  
 
 A typical Engineering Platform release pipeline for the underlying cluster control plane instances will have the following cluster roles:
