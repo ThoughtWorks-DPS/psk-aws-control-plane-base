@@ -62,7 +62,7 @@ kubectl apply -f tpl/efs-csi-storage-class.yaml
 # create default Node Class, along with amd and arm node pools
 cat <<EOF > tpl/default-node-class.yaml
 ---
-apiVersion: karpenter.k8s.aws/v1beta1
+apiVersion: karpenter.k8s.aws/v1
 kind: EC2NodeClass
 metadata:
   name: default-node-class
