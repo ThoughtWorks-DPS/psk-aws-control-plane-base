@@ -25,7 +25,7 @@ spec:
           operator: In
           values: ["xlarge","2xlarge","4xlarge"]
       nodeClassRef:
-        apiVersion: karpenter.k8s.aws/v1beta1
+        apiVersion: karpenter.k8s.aws/v1
         kind: EC2NodeClass
         name: default-node-class
   limits:
