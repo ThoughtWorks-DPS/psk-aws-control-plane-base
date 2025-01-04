@@ -38,7 +38,7 @@ module "eks_addons" {
     }
 
     aws-ebs-csi-driver = {
-      amost_recent             = true
+      most_recent              = true
       service_account_role_arn = module.ebs_csi_irsa_role.iam_role_arn
       configuration_values = jsonencode({
         controller = {
@@ -58,10 +58,14 @@ module "eks_addons" {
     }
 
     aws-efs-csi-driver = {
-      amost_recent             = true
+      most_recent              = true
       service_account_role_arn = module.efs_csi_irsa_role.iam_role_arn
       configuration_values = jsonencode({
         controller = {
+          podDisruptionBudget = {
+            enabled        = true
+            maxUnavailable = 1
+          }
           nodeSelector = {
             "node.kubernetes.io/role" = "management"
           }
@@ -83,7 +87,7 @@ module "eks_addons" {
 
 module "vpc_cni_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "~> 5.48.0"
+  version = "~> 5.52.0"
 
   role_path             = "/PSKRoles/"
   role_name             = "${var.cluster_name}-vpc-cni"
@@ -100,7 +104,7 @@ module "vpc_cni_irsa_role" {
 
 module "ebs_csi_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "~> 5.48.0"
+  version = "~> 5.52.0"
 
   role_path             = "/PSKRoles/"
   role_name             = "${var.cluster_name}-ebs-csi-controller-sa"
@@ -116,7 +120,7 @@ module "ebs_csi_irsa_role" {
 
 module "efs_csi_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "~> 5.48.0"
+  version = "~> 5.52.0"
 
   role_path             = "/PSKRoles/"
   role_name             = "${var.cluster_name}-efs-csi-controller-sa"
