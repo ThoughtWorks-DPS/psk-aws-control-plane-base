@@ -4,12 +4,12 @@
   "aws_assume_role": "PSKRoles/PSKControlPlaneBaseRole",
   "aws_region": "us-east-1",
 
-  "eks_version": "1.30",
+  "eks_version": "1.31",
   "enable_log_types": ["api","audit","authenticator","controllerManager","scheduler"],
   "node_subnet_identifier": "node",
   "intra_subnet_identifier": "intra",
 
-  "auto_refresh_management_node_group": "true",
+  "auto_refresh_management_node_group": "false",
   "management_node_group_name": "management-arm-rkt-mng",
   "management_node_group_role": "management",
   "management_node_group_ami_type": "BOTTLEROCKET_ARM_64",
