@@ -62,10 +62,6 @@ module "eks_addons" {
       service_account_role_arn = module.efs_csi_irsa_role.iam_role_arn
       configuration_values = jsonencode({
         controller = {
-          podDisruptionBudget = {
-            enabled        = true
-            maxUnavailable = 1
-          }
           nodeSelector = {
             "node.kubernetes.io/role" = "management"
           }
