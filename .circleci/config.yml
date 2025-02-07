@@ -4,11 +4,11 @@ orbs:
   terraform: twdps/terraform@3.1.1
   kube: twdps/kube-ops@1.1.2
   op: twdps/onepassword@3.0.0
-  do: twdps/pipeline-events@4.2.0
+  do: twdps/pipeline-events@5.0.1
 
 globals:
   - &context empc-lab
-  - &executor-image twdps/circleci-infra-aws:alpine-7.8.0
+  - &executor-image twdps/circleci-infra-aws:alpine-7.9.0
 
 on-push-main: &on-push-main
   branches:
@@ -117,7 +117,6 @@ jobs:
       - run-integration-tests:
           cluster: << parameters.cluster >>
 
-# ============================================================ workflows
 
 workflows:
 
@@ -216,6 +215,18 @@ workflows:
             - approve prod-i01-aws-us-east-2 changes
           filters: *on-tag-main
 
+      - do/gh-release:
+          name: generate release notes
+          context: *context
+          notes-from-file: release.md
+          include-commit-msg: true
+          before-release:
+            - op/env:
+                env-file: op.prod-i01-aws-us-east-2.env
+          requires:
+            - apply prod-i01-aws-us-east-2 changes
+          filters: *on-tag-main
+
       - do/schedule-pipeline:
           name: schedule nightly integration tests
           context: *context
@@ -242,42 +253,42 @@ workflows:
           cluster: prod-i01-aws-us-east-2
           context: *context
 
-#====================================================== tear down
-  tear down psk control plane base:
-    when:
-      not:
-        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
-    jobs:
-      - approve tear down:
-          name: approve teardown sbx
-          type: approval
-          filters: *on-push-main
+  #====================================================== tear down
+  # tear down psk control plane base:
+  #   when:
+  #     not:
+  #       equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+  #   jobs:
+  #     - approve tear down:
+  #         name: approve teardown sbx
+  #         type: approval
+  #         filters: *on-push-main
 
-      - terraform/destroy:
-          name: destroy sbx-i01-aws-us-east-1
-          context: *context
-          executor-image: *executor-image
-          workspace: sbx-i01-aws-us-east-1
-          before-destroy:
-            - set-environment:
-                cluster: sbx-i01-aws-us-east-1
-          requires:
-            - approve teardown sbx
-          filters: *on-push-main
+  #     - terraform/destroy:
+  #         name: destroy sbx-i01-aws-us-east-1
+  #         context: *context
+  #         executor-image: *executor-image
+  #         workspace: sbx-i01-aws-us-east-1
+  #         before-destroy:
+  #           - set-environment:
+  #               cluster: sbx-i01-aws-us-east-1
+  #         requires:
+  #           - approve teardown sbx
+  #         filters: *on-push-main
 
-      - approve tear down:
-          name: approve teardown prod
-          type: approval
-          filters: *on-push-main
+  #     - approve tear down:
+  #         name: approve teardown prod
+  #         type: approval
+  #         filters: *on-push-main
 
-      - terraform/destroy:
-          name: destroy prod-i01-aws-us-east-2
-          context: *context
-          executor-image: *executor-image
-          workspace: prod-i01-aws-us-east-2
-          before-destroy:
-            - set-environment:
-                cluster: prod-i01-aws-us-east-2
-          requires:
-            - approve teardown prod
-          filters: *on-push-main
+  #     - terraform/destroy:
+  #         name: destroy prod-i01-aws-us-east-2
+  #         context: *context
+  #         executor-image: *executor-image
+  #         workspace: prod-i01-aws-us-east-2
+  #         before-destroy:
+  #           - set-environment:
+  #               cluster: prod-i01-aws-us-east-2
+  #         requires:
+  #           - approve teardown prod
+  #         filters: *on-push-main
